@@ -107,6 +107,7 @@ ground = Platform()
 ground.surf=pg.transform.scale(ground.surf,(360,64))
 ground.rect = ground.surf.get_rect(center = (width/2,height-50))
 ground.point= False
+ground.speed= 0
 
 all_sprites= pg.sprite.Group()
 all_sprites.add(player)
@@ -188,7 +189,7 @@ while True:
             pl.rect.y += abs(player.vel.y)
             if pl.rect.top >= height:
                 pl.kill() #quita las plataformas que desaparecen de la pantalla por abajo.
-
+    player.move()
     player.update() #ejecuta la función UPDATE del jugador. ahora mismo solo gestiona las colisiones con plataformas.
 
     screen.fill(bgColor)
@@ -197,9 +198,9 @@ while True:
 
     screen.blit(pg.transform.flip(player.surf,player.flipImage,False),player.rect)
     
-    for entity in all_sprites: #renderiza las entidades y muevelas
-        screen.blit(entity.surf,entity.rect)
-        entity.move()
+    for pl in platforms: #renderiza las entidades y muevelas
+        screen.blit(pl.surf,pl.rect)
+        pl.move()
 
     pointsText= pointsFont.render(str(player.score),True,(0,255,255)) #el render debe estar aqui pues va a cambiar constantemente no como el otro texto
     screen.blit(pointsText,(width/2,10))

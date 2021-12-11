@@ -2,7 +2,7 @@ import sys, random, pygame as pg
 
 pg.init()
 pg.mixer.init()
-pg.mixer.music.load("file_example_OOG_5MG.ogg")
+pg.mixer.music.load("snake_sample_music.ogg")
 pg.mixer.music.play()
 pg.mixer.music.set_volume(0.5) #de 0.0 a 1.0
 pg.mixer.music.play(-1) #en blucle -1, solo una vez 1
