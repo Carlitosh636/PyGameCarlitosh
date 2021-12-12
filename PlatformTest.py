@@ -2,7 +2,7 @@ import sys, pygame as pg
 import random
 import time
 
-from pygame.constants import K_LEFT, K_RIGHT, K_SPACE
+from pygame.constants import K_LEFT, K_RIGHT
 pg.init()
 pg.font.init()
 
@@ -23,7 +23,7 @@ displaysurface = pg.display.set_mode((width, height))
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.surf=pg.image.load("Intro_ball.gif")
+        self.surf=pg.image.load("Platformer/Intro_ball.gif")
         self.surf = pg.transform.scale(self.surf,(64,64)) #cambiar el tamaño
         self.rect = self.surf.get_rect() 
         self.flipImage=False
@@ -85,7 +85,7 @@ class Player(pg.sprite.Sprite):
 class Platform(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.surf= pg.image.load("ground.png")
+        self.surf= pg.image.load("Platformer/ground.png")
         self.surf = pg.transform.scale(self.surf,(180,32))
         self.rect = self.surf.get_rect(center = (random.randint(0,width-10),random.randint(0, height-30))) #crear plataforma en pos random, entre 0 (el top) y el máximo (con un margen)
         self.moving = True
