@@ -19,9 +19,6 @@ run = True
 valueMult = 1
 valueTime = 0
 
-"""TO DO: sonidos para la serpiente y consumables. Limpiar código"""
-
-
 class Entity():
     def __init__(self, rect) -> None:
         self.rect = rect

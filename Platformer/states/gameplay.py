@@ -9,17 +9,9 @@ MAXPLATFORMS= 6
 class Gameplay(BaseState):
     def __init__(self):
         super(Gameplay, self).__init__()
-        #self.rect = pg.Rect((0, 0), (80, 80))
-        self.player = Player()
-        self.ground = Platform()
-        self.player.rect = self.player.surf.get_rect(center=(WIDTH-100,HEIGHT-100))
-        self.ground.surf=pg.transform.scale(self.ground.surf,(360,64))
-        self.ground.rect = self.ground.surf.get_rect(center = (WIDTH/2,HEIGHT-50))
-        self.ground.point= False
-        self.ground.speed= 0
-        self.platforms= pg.sprite.Group()
-        self.platforms.add(self.ground)
+        
         self.next_state = "GAME_OVER"
+        self.platSpeed = 0
         self.moveDir = 0
         self.playerFlip = False
 
@@ -37,23 +29,33 @@ class Gameplay(BaseState):
 
     def platform_generation(self):
         while len(self.platforms) < MAXPLATFORMS:
-            pl = Platform()
+            pl = Platform(self.platSpeed)
             C = True
             while C: #solo sale del while si la plataforma no choca con alguna de las existentes
-                pl= Platform()
+                pl= Platform(self.platSpeed)
                 pl.rect.center = (random.randrange(0,WIDTH-10),random.randrange(0,50))
                 C = self.check_plat_collision(pl,self.platforms)
             self.platforms.add(pl)
      
     def startup(self, persistent):
-        #get dificultad
+        self.player = Player()
+        self.platSpeed = persistent
+        self.ground = Platform(self.platSpeed)
+        self.player.rect = self.player.surf.get_rect(center=(WIDTH-100,HEIGHT-300))
+        self.ground.surf=pg.transform.scale(self.ground.surf,(360,64))
+        self.ground.rect = self.ground.surf.get_rect(center = (WIDTH/2,HEIGHT-250))
+        self.ground.point= False
+        self.ground.speed= 0
+        self.platforms= pg.sprite.Group()
+        self.platforms.add(self.ground)
+        
         count = random.randint(MAXPLATFORMS-2,MAXPLATFORMS-1)
 
         while count > 0:
             C = True
-            pl = Platform()
+            pl = Platform(self.platSpeed)
             while C:
-                pl = Platform()
+                pl = Platform(self.platSpeed)
                 C = self.check_plat_collision(pl,self.platforms)
             self.platforms.add(pl)
             count-=1
@@ -71,12 +73,13 @@ class Gameplay(BaseState):
             if event.key == pg.K_SPACE:
                 self.player.jump(self.platforms)
         elif event.type == pg.KEYUP:
-            self.moveDir = 0  
+            if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
+                self.moveDir = 0  
 
     def update(self, dt):
         if self.player.rect.top > HEIGHT:
             self.done = True
-        if self.player.rect.top <= HEIGHT / 3: # si pasa del pto determinado
+        if self.player.rect.top <= HEIGHT / 4: # si pasa del pto determinado
             self.player.pos.y += abs(self.player.vel.y) #actualiza la pos del jugador
             for pl in self.platforms: #actualiza la pos de las plataformas (se quedan abajo ya que no se mueven, a diferencia del jugador)
                 pl.rect.y += abs(self.player.vel.y)

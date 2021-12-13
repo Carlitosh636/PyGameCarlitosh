@@ -71,13 +71,13 @@ class Player(pg.sprite.Sprite):
             
 
 class Platform(pg.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,vel):
         super().__init__()
         self.surf= pg.image.load("ground.png")
         self.surf = pg.transform.scale(self.surf,(180,32))
         self.rect = self.surf.get_rect(center = (random.randint(0,WIDTH-10),random.randint(0, WIDTH-30))) #crear plataforma en pos random, entre 0 (el top) y el máximo (con un margen)
         self.moving = True
-        self.speed= random.randint(-1,1) #puede moverse a la izquierda, a la derecha o no moverse (el 0)
+        self.speed= vel*random.randint(-1,1) #puede moverse a la izquierda, a la derecha o no moverse (el 0)
         self.point =  True #para asegurarse de que no se pueden "duplicar" puntos
     def move(self):
         if self.moving:
