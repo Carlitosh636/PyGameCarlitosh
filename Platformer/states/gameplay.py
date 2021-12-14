@@ -78,6 +78,7 @@ class Gameplay(BaseState):
 
     def update(self, dt):
         if self.player.rect.top > HEIGHT:
+            self.persistData = self.player.score
             self.done = True
         if self.player.rect.top <= HEIGHT / 4: # si pasa del pto determinado
             self.player.pos.y += abs(self.player.vel.y) #actualiza la pos del jugador

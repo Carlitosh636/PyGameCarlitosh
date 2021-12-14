@@ -69,22 +69,22 @@ class Wall(Entity):
         super().__init__(rect)
 
     def touchEffect(self):
-        """meter aqui lo de si se toca, no moverse"""
         return super().touchEffect()
 
 
 def calculate_pos_consum():
     x = random.randint(-15, 15) * 25
     y = random.randint(-15, 15) * 25
-    """se sale algunas veces y por consecuencia aparece demasiado en el borde. Probar las tecnicas de try catch que vienen en las diapos de clase a ver si es mejor."""
-    if x < 0:
-        x = 25
-    if x > 720:
+    while x < 25 or x > 695:
+        x = random.randint(-15, 15) * 25
+    while y < 25 or y > 695:
+        y = random.randint(-15, 15) * 25
+    """if x > 720:
         x = 720
     if y < 0:
         y = 25
     if y > 720:
-        y = 720
+        y = 720"""
     return [x, y]
 
 
@@ -102,8 +102,8 @@ walls = [wall1, wall2, wall3, wall4]
 
 consum1Position = [225, 100]
 consum1 = BlueConsumable(pg.Rect(consum1Position[0], consum1Position[1], 25, 25), BLUE)
-consum2 = BlueConsumable(pg.Rect(consum1Position[0] + 125, consum1Position[1] + 60, 25, 25), BLUE)
-consum3 = GreenConsumable(pg.Rect(consum1Position[0] + 150, consum1Position[1] + 60, 25, 25), GREEN)
+consum2 = BlueConsumable(pg.Rect(consum1Position[0] + 125, consum1Position[1] + 50, 25, 25), BLUE)
+consum3 = GreenConsumable(pg.Rect(consum1Position[0] + 150, consum1Position[1] + 50, 25, 25), GREEN)
 consumables = [consum1, consum2, consum3]
 
 prevPositions = []
